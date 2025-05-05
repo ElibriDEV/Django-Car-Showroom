@@ -1,0 +1,96 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}{{ car }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex flex-row justify-content-between align-items-center py-4">
+        <h1>{{ car }}</h1>
+        <div class="py-2 px-4 rounded bg-red text-white">
+            <h3 class="p-0 m-0">{{ car.price|floatformat:"2g" }} ₽</h3>
+        </div>
+
+    </div>
+
+  <div class="banner bg-secondary bg-gradient bg-opacity-25 rounded">
+    <div id="banner_carousel" class="carousel slide">
+        <div class="carousel-inner">
+            {% for image in car.images.all %}
+            <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+              <div class="d-flex justify-content-center" style="height: 25em;">
+                <img class="d-block img-responsive" src="{{ image.image.url }}" alt="First slide">
+              </div>
+
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev opacity-100" type="button" data-bs-target="#banner_carousel" data-bs-slide="prev">
+            <span class="arrow" style="width: 50px; height: 50px">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next opacity-100" type="button" data-bs-target="#banner_carousel" data-bs-slide="next">
+            <span class="arrow" style="width: 50px; height: 50px">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+  </div>
+    <div class="row py-4">
+        <div class="col">
+            <p class="text-justify">{% if car.description %}{{ car.description }}{% else %}Описание отсутствует.{% endif %}</p>
+        </div>
+        <div class="col card">
+            <div class="d-flex flex-column">
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>Производитель:</p>
+                    <p>{{ car.brand }}</p>
+                </div>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>Модель:</p>
+                    <p>{{ car.model }}</p>
+                </div>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>Категория:</p>
+                    <p>{{ car.category }}</p>
+                </div>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>Год:</p>
+                    <p>{{ car.year }}</p>
+                </div>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>Пробег:</p>
+                    <p>{{ car.mileage|floatformat:"g" }} км</p>
+                </div>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>БУ:</p>
+                    <p>{% if car.used %}Да{% else %}Нет{% endif %}</p>
+                </div>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>Цвет:</p>
+                    <p>{{ car.color }}</p>
+                </div>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>Мощность:</p>
+                    <p>{{ car.power }} л.с.</p>
+                </div>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>Привод:</p>
+                    <p>{{ car.drive }}</p>
+                </div>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>Страна:</p>
+                    <p>{{ car.country }}</p>
+                </div>
+                <div class="d-flex flex-row gap-2 align-items-center">
+                    <p>Забронировано:</p>
+                    <p>{% if car.reserved %}Да{% else %}Нет{% endif %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

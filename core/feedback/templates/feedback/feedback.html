@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Отзыв{% endblock %}
+
+{% block static %}
+<script src="{% static 'js/feedback.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="pt-4 pb-2">Оставить отзыв</h1>
+    <h5>Помогите нам сделать сайт лучше!</h5>
+    <div class="py-4">
+        {% if form %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary bg-red">Оставить отзыв</button>
+        </form>
+        {% else %}
+        <h5 class="pt-4">Спасибо за отзыв!</h5>
+        <div class="py-4">
+            {% for field, value in form_data.items %}
+                <div class="d-flex flex-row gap-3">
+                    <p>{{ field }}:</p>
+                    <p>{% if value is not None %}{{ value }}{% else %}Empty{% endif %}</p>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

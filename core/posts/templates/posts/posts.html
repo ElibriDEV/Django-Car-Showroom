@@ -1,0 +1,58 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Полезное{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex flex-row justify-content-between pt-4">
+        <h1 >Полезное</h1>
+        {% if user.is_staff %}
+        <a href="{% url 'posts:new-post' %}" class="btn btn-danger bg-red d-flex align-items-center my-2"><span>Создать пост</span></a>
+        {% endif %}
+    </div>
+
+    <div class="row pb-4">
+        {% for post in page_data.object_list %}
+        <div class="row py-4">
+            <div class="col-3 w-100 h-100 overflow-hidden" style="max-height: 250px; max-width: 350px;">
+                <img class="w-100 img-responsive" src="{{ post.image.url }}" alt="...">
+            </div>
+
+            <div class="col d-flex flex-column h-100 justify-content-center">
+                <h5 class="text-nowrap">{{ post.title }}</h5>
+                <p class="text-justify">{{ post.preview_content }}</p>
+                <p class="text-red">{{ post.updated_at|date:'d M Y' }}</p>
+                <a href="{{ post.get_absolute_url }}" class="btn btn-danger bg-red w-25">Перейти</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="d-flex flex-row justify-content-center">
+    <ul class="pagination">
+
+        <li class="page-item {% if not page_data.has_previous %}disabled{% endif %}">
+            <a class="page-link" href="?page=1" aria-label="Previous">
+                <span class="text-red" aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+            {% for n in page_data.paginator.page_range %}
+            {% if page_data.number == n %}
+            <li class="page-item active bg-red">
+                <span class="page-link bg-red">{{ n }}</span>
+            </li>
+            {% elif n > page_data.number|add:'-5' and n < page_data.number|add:'5' %}
+            <li class="page-item"><a class="page-link text-red" href="?page={{ n }}">{{ n }}</a></li>
+            {% endif %}
+            {% endfor %}
+        <li class="page-item {% if not page_data.has_next %}disabled{% endif %}">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                <span class="text-red" aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+{% endblock %}

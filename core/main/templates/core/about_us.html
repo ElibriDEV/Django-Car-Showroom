@@ -1,0 +1,65 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}О нас{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <h1 class="pt-4">О нас</h1>
+  <hr/>
+  <div class="py-4">
+    <div class="row py-4">
+      <div class="col">
+        <div class="d-flex flex-row h-100 align-items-center">
+          <p class="text-justify">Добро пожаловать в VroomX Auto – ваш надежный партнер в мире автомобилей! Мы – команда профессионалов, которая с любовью и вниманием подходит к каждому клиенту, предлагая широкий ассортимент новых и подержанных автомобилей, а также услуги по импорту автомобилей из-за границы.</p>
+        </div>
+      </div>
+      <div class="col-5">
+        <video class="w-100 h-auto" loop="true" autoplay="autoplay" muted>
+          <source src="{% static 'media/summer.mp4' %}" type="video/mp4"></source>
+        </video>
+      </div>
+    </div>
+    <hr/>
+    <div class="row py-4">
+      <div class="col-5">
+        <video class="w-100 h-auto" loop="true" autoplay="autoplay" muted>
+          <source src="{% static 'media/winter.mp4' %}" type="video/mp4"></source>
+        </video>
+      </div>
+      <div class="col">
+        <div class="d-flex flex-row h-100 align-items-center">
+          <p class="text-justify">Наша миссия – сделать процесс покупки автомобиля максимально простым и комфортным для вас. Мы понимаем, что выбор автомобиля – это важный шаг, и готовы предложить вам только лучшие решения, соответствующие вашим потребностям и бюджету. В нашем автосалоне вы найдете автомобили различных марок и моделей, которые прошли тщательную проверку и готовы к эксплуатации.</p>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <div class="row py-4">
+      <div class="col">
+        <div class="d-flex flex-row h-100 align-items-center">
+          <p>Мы гордимся тем, что можем предложить нашим клиентам не только качественные автомобили, но и профессиональные консультации. Наша команда экспертов всегда готова ответить на ваши вопросы, помочь с выбором и предложить выгодные условия финансирования.</p>
+        </div>
+      </div>
+      <div class="col-5">
+        <img class="w-100 h-auto" src="{% static 'images/about_us/in-3.jpg' %}">
+      </div>
+    </div>
+    <hr/>
+
+    <div class="row py-4">
+      <div class="col-5">
+        <img class="w-100 h-auto" src="{% static 'images/about_us/in-1.jpg' %}">
+      </div>
+      <div class="col">
+        <div class="d-flex flex-row h-100 align-items-center">
+          <p>VroomX Auto – это не просто автосалон, это сообщество автолюбителей, которые ценят качество, надежность и индивидуальный подход. Мы стремимся к тому, чтобы каждый наш клиент остался довольным своей покупкой и вернулся к нам снова.</p>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <p class="fw-bold">Приходите в VroomX Auto и откройте для себя мир автомобилей, где ваши мечты становятся реальностью!</p>
+  </div>
+</div>
+
+{% endblock %}

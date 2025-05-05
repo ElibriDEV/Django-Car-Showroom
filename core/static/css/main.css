@@ -1,0 +1,12 @@
+.text-justify {
+    text-align: justify;
+}
+
+.bg-red {
+    background-color: #b62513 !important;
+    border-color: #b62513 !important;
+}
+
+.text-red {
+    color: #b62513 !important;
+}

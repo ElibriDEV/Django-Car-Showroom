@@ -1,0 +1,318 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}VroomX Auto{% endblock %}
+
+{% block static %}{% if modal_active %}<script defer src="{% static 'js/feedback-modal.js' %}"></script>{% endif %}{% endblock %}
+
+{% block content %}
+<div class="banner">
+    <div id="banner_carousel" class="carousel slide">
+        <div class="carousel-inner">
+            {% for banner in banners %}
+            <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+                <a href="{% if banner.redirect_url %}{{ banner.redirect_url }}{% endif %}">
+                    <img class="d-block w-100" src="{{ banner.image.url }}" alt="First slide">
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev opacity-100" type="button" data-bs-target="#banner_carousel" data-bs-slide="prev">
+            <span class="arrow" style="width: 50px; height: 50px">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next opacity-100" type="button" data-bs-target="#banner_carousel" data-bs-slide="next">
+            <span class="arrow" style="width: 50px; height: 50px">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<div class="container pt-3">
+    <div class="description">
+        <h1 class="pb-2">VroomX Auto:</h1>
+        <div class="row">
+            <div class="col text-justify">
+                <p>
+                    Добро пожаловать в VroomX Auto — ваш надежный партнер в мире автомобилей!
+                    Мы гордимся тем, что предоставляем нашим клиентам широкий спектр услуг и уникальные предложения,
+                    чтобы сделать процесс покупки автомобиля максимально комфортным и приятным.
+
+                    VroomX Auto — это не просто автосалон, это место, где сбываются автомобильные мечты!
+                    Мы стремимся к тому, чтобы каждый клиент остался доволен своим выбором и получил
+                    максимальное удовольствие от покупки. Ждем вас в нашем салоне!
+                </p>
+            </div>
+            <div class="col">
+                <div class="d-flex align-items-center h-100">
+                    <ul class="h-auto">
+                        <li>Самые последние модели от ведущих производителей.</li>
+                        <li>Большой выбор качественных автомобилей с пробегом.</li>
+                        <li>Услуги по импорту автомобилей из-за рубежа.</li>
+                        <li>Гибкие условия финансирования и кредитования.</li>
+                        <li>Полный спектр услуг по техническому обслуживанию и ремонту.</li>
+                        <li>Команда профессионалов всегда готова помочь вам с выбором автомобиля.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if sent_feedback %}
+<div class="d-flex position-absolute top-0 w-100 justify-content-center">
+    <div class="alert alert-success d-flex flex-row gap-3" role="alert">
+        <p class="m-0 p-0">Заявка на обратную связь успешно отправлена!</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+{% endif %}
+
+
+<div class="call_order bg-dark p-4 mt-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center px-5">
+            <h3 class="text-white">Нужна консультация?</h3>
+            <button type="button" class="btn btn-danger btn-lg bg-red p-3" data-toggle="modal" data-target="#exampleModalCenter" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Заказать звонок</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Заказать звонок</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="mb-3">
+                        <label class="col-form-label">{{ form.name.label }}</label>
+                        {{ form.name }}
+                        {{ form.name.errors }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">{{ form.phone.label }}</label>
+                        {{ form.phone }}
+                        {{ form.phone.errors }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary bg-red">Заказать звонок</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="services py-3">
+    <div class="container">
+        <h2>Услуги:</h2>
+        <div class="d-flex pt-4">
+            <div class="service w-25 px-3 d-flex flex-column">
+                <div class="services__image d-flex justify-content-center pb-4">
+                    <img class="img-fluid w-25" src="{% static 'images/service/new_auto.png' %}" alt="">
+                </div>
+                <h5>Продажа новых автомобилей</h5>
+                <p class="text-justify">Широкий выбор последних моделей от ведущих производителей с возможностью индивидуальной комплектации под ваши предпочтения.</p>
+            </div>
+            <div class="service w-25 px-3">
+                <div class="services__image d-flex justify-content-center pb-4">
+                    <img class="img-fluid w-25" src="{% static 'images/service/bu_auto.png' %}" alt="">
+                </div>
+                <h5>Продажа автомобилей с пробегом</h5>
+                <p class="text-justify">Качественные и проверенные автомобили с пробегом, которые прошли полную диагностику и готовы к эксплуатации.</p>
+            </div>
+            <div class="service w-25 px-3">
+                <div class="services__image d-flex justify-content-center pb-4">
+                    <img class="img-fluid w-25" src="{% static 'images/service/import.png' %}" alt="">
+                </div>
+                <h5>Импорт автомобилей</h5>
+                <p class="text-justify">Услуга по заказу и доставке автомобилей из-за рубежа, включая редкие и эксклюзивные модели, с полным сопровождением на всех этапах.</p>
+            </div>
+            <div class="service w-25 px-3">
+                <div class="services__image d-flex justify-content-center pb-4">
+                    <img class="img-fluid w-25" src="{% static 'images/service/finance.png' %}" alt="">
+                </div>
+                <h5>Кредитование и финансирование</h5>
+                <p class="text-justify">Гибкие условия кредитования и рассрочки, позволяющие вам легко и удобно приобрести автомобиль без лишних финансовых нагрузок.</p>
+            </div>
+        </div>
+        <div class="d-flex pt-4">
+            <div class="service w-25 px-3">
+                <div class="services__image d-flex justify-content-center pb-4">
+                    <img class="img-fluid w-25" src="{% static 'images/service/exchange.png' %}" alt="">
+                </div>
+                <h5>Обмен старого автомобиля</h5>
+                <p class="text-justify">Удобная программа обмена вашего старого автомобиля на новый с выгодной оценкой и минимальными временными затратами.</p>
+            </div>
+            <div class="service w-25 px-3">
+                <div class="services__image d-flex justify-content-center pb-4">
+                    <img class="img-fluid w-25" src="{% static 'images/service/service.png' %}" alt="">
+                </div>
+                <h5>Техническое обслуживание</h5>
+                <p class="text-justify">Профессиональное обслуживание и ремонт автомобилей, включая плановые ТО, диагностику и устранение неисправностей.</p>
+            </div>
+            <div class="service w-25 px-3">
+                <div class="services__image d-flex justify-content-center pb-4">
+                    <img class="img-fluid w-25" src="{% static 'images/service/insurance.png' %}" alt="">
+                </div>
+                <h5>Страхование автомобилей</h5>
+                <p class="text-justify">Помощь в выборе и оформлении страховых полисов, включая КАСКО и ОСАГО, с выгодными условиями и скидками.</p>
+            </div>
+            <div class="service w-25 px-3">
+                <div class="services__image d-flex justify-content-center pb-4">
+                    <img class="img-fluid w-25" src="{% static 'images/service/test-drive.png' %}" alt="">
+                </div>
+                <h5>Тест-драйв</h5>
+                <p class="text-justify">Возможность протестировать понравившуюся модель перед покупкой, чтобы убедиться в ее комфорте и управляемости.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="benefits py-3 bg-red text-white">
+    <div class="container">
+        <h2>Наши преимущества:</h2>
+        <div class="d-flex pb-2 pt-4">
+            <div class="benefit w-25 mx-2 px-3 shadow py-3">
+                <h5>Широкий ассортимент</h5>
+                <p class="text-justify">У нас представлен обширный выбор новых и подержанных автомобилей различных марок и моделей, что позволяет каждому клиенту найти идеальный вариант.</p>
+            </div>
+            <div class="benefit w-25 mx-2 px-3 shadow py-3">
+                <h5>Качество и надежность</h5>
+                <p class="text-justify">Все автомобили, предлагаемые в нашем автосалоне, проходят тщательную проверку и диагностику, что гарантирует их высокое качество и надежность.</p>
+            </div>
+            <div class="benefit w-25 mx-2 px-3 shadow py-3">
+                <h5>Индивидуальный подход</h5>
+                <p class="text-justify">Мы ценим каждого клиента и предлагаем персонализированные решения, учитывающие ваши потребности и бюджет.</p>
+            </div>
+            <div class="benefit w-25 mx-2 px-3 shadow py-3">
+                <h5>Гибкие условия финансирования</h5>
+                <p class="text-justify">Мы предлагаем разнообразные варианты кредитования и рассрочки, что делает покупку автомобиля доступной для всех.</p>
+            </div>
+        </div>
+        <div class="d-flex pt-2 pb-4">
+            <div class="benefit w-25 mx-2 px-3 shadow py-3">
+                <h5>Профессиональная команда</h5>
+                <p class="text-justify">Наша команда состоит из опытных специалистов, готовых предоставить квалифицированные консультации и помощь на каждом этапе покупки.</p>
+            </div>
+            <div class="benefit w-25 mx-2 px-3 shadow py-3">
+                <h5>Удобное местоположение</h5>
+                <p class="text-justify">Наш автосалон удобно расположен, что позволяет легко добраться до нас и провести время с комфортом.</p>
+            </div>
+            <div class="benefit w-25 mx-2 px-3 shadow py-3">
+                <h5>Полный спектр услуг</h5>
+                <p class="text-justify">Мы предлагаем не только продажу автомобилей, но и услуги по техническому обслуживанию, страхованию и обмену, что делает нас универсальным партнером для автовладельцев.</p>
+            </div>
+            <div class="benefit w-25 mx-2 px-3 shadow py-3">
+                <h5>Прозрачность и честность</h5>
+                <p class="text-justify">Мы гарантируем прозрачные условия сделок и отсутствие скрытых платежей, что создает доверительные отношения с клиентами.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--{% if cars %}-->
+<!--<div class="last_cars py-3">-->
+<!--    <div class="container">-->
+<!--        <h2 class="pb-3">Новинки:</h2>-->
+<!--    </div>-->
+<!--    <div id="cars_carousel" class="carousel slide">-->
+<!--        <div class="container">-->
+<!--            <div class="carousel-inner px-5">-->
+<!--                {% for car_set in cars %}-->
+<!--                <div class="carousel-item {% if forloop.counter0 < 5 %}active{% endif %}">-->
+<!--                    <div class="row">-->
+<!--                        {% for car in car_set %}-->
+<!--                        <div class="d-flex">-->
+<!--                            <div class="card" style="width: 18rem;">-->
+<!--                                <img src="{{ car.image.url }}" class="card-img-top" alt="...">-->
+<!--                                <div class="card-body">-->
+<!--                                    <h5 class="card-title text-center">{{ car.automobile }}</h5>-->
+<!--                                    <h6 class="text-center">{{ car.automobile.price|floatformat:"2g" }} ₽</h6>-->
+<!--                                    <a href="{{ car.automobile.get_absolute_url }}" class="btn btn-danger bg-red btn-block w-100">Перейти</a>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        {% endfor %}-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <button class="carousel-control-prev opacity-100" type="button" data-bs-target="#cars_carousel" data-bs-slide="prev">-->
+<!--            <span class="arrow bg-red p-2 rounded-circle" style="width: 50px; height: 50px">-->
+<!--                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--            </span>-->
+<!--            <span class="visually-hidden">Previous</span>-->
+<!--        </button>-->
+<!--        <button class="carousel-control-next opacity-100" type="button" data-bs-target="#cars_carousel" data-bs-slide="next">-->
+<!--            <span class="arrow bg-red p-2 rounded-circle" style="width: 50px; height: 50px">-->
+<!--                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--            </span>-->
+<!--            <span class="visually-hidden">Next</span>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</div>-->
+<!--{% endif %}-->
+
+
+{% if posts %}
+<div class="posts py-3">
+    <div class="container">
+        <h2 class="pb-3">Полезное:</h2>
+    </div>
+    <div id="posts_carousel" class="carousel slide">
+        <div class="container">
+            <div class="carousel-inner px-5">
+
+                {% for post_set in posts %}
+                <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+                    <div class="row">
+                        {% for post in post_set %}
+                        <div class="col-3">
+                            <div class="card h-100">
+                                <div class="w-100 h-100 overflow-hidden" style="max-height: 220px;">
+                                    <img src="{{ post.image.url }}" class="card-img-top img-responsive" alt="...">
+                                </div>
+                                <div class="card-body d-flex flex-column justify-content-between">
+                                    <div class="text">
+                                        <h5 class="card-title text-center">{{ post.title }}</h5>
+                                        <p class="text-justify">{{ post.preview_content }}</p>
+                                    </div>
+
+                                    <a href="{{ post.get_absolute_url }}" class="btn btn-danger bg-red btn-block w-100">Перейти</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <button class="carousel-control-prev opacity-100" type="button" data-bs-target="#posts_carousel" data-bs-slide="prev">
+            <span class="arrow bg-red p-2 rounded-circle" style="width: 50px; height: 50px">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next opacity-100" type="button" data-bs-target="#posts_carousel" data-bs-slide="next">
+            <span class="arrow bg-red p-2 rounded-circle" style="width: 50px; height: 50px">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

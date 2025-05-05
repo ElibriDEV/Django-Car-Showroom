@@ -1,0 +1,58 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="container h-100 py-3">
+    <div class="py-3 d-flex flex-row justify-content-between align-items-center">
+        <h1>{{ post.title }}</h1>
+        <p class="text-red">{{ post.updated_at|date:'d M Y' }}</p>
+    </div>
+    <p class="text-justify">{{ post.content }}</p>
+
+    <hr/>
+
+    {% if not user.is_authenticated %}
+    <div class="d-flex flex-row gap-2">
+        <p>Авторизуйтесь чтобы оставить комментарий</p>
+        <a class="text-decoration-none text-red" href="{% url 'users:login' %}"><p>Вход</p></a>
+    </div>
+    {% else %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.text }}
+        <div class="py-3">
+            <button type="submit" class="btn btn-primary bg-red">Комментировать</button>
+        </div>
+    </form>
+    {% endif %}
+
+    {% if comments %}
+    <hr/>
+    <div class="pt-2">
+        {% for comment in comments %}
+        <div class="py-2 px-3">
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    <div class="d-flex flex-row gap-2 text-red">
+                        <span>{{ comment.author }}</span>
+                        <span>{{ comment.updated_at|date:'d M Y' }}</span>
+                    </div>
+
+                    {% if comment.author == request.user %}
+                    <a href="{% url 'posts:comment-delete' pk=post.pk comment_pk=comment.pk %}">
+                        <button type="button" class="btn bg-red text-white">Удалить</button>
+                    </a>
+                    {% endif %}
+
+
+                </div>
+                <p>{{ comment.text }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
